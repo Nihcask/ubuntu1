@@ -1,11 +1,17 @@
+FROM ubuntu:latest AS stage1 
+RUN apt update
+RUN apt-get install -y wget openjdk-11-jdk
+RUN wget https://get.jenkins.io/war-stable/2.387.2/jenkins.war 
+RUN wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.74/bin/apache-tomcat-9.0.74.tar.gz
+RUN tar -zxvf apache-tomcat-9.0.74.tar.gz
+RUN cp jenkins.war apache-tomcat-9.0.74/webapps/
+RUN apt-get install -y apache2 
+
 FROM ubuntu:latest
-RUN apt-get update && apt-get install -y apache2
-RUN apt-get update && apt-get install -y wget gnupg2
-RUN wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
-RUN sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-RUN apt-get update && apt-get install -y jenkins
-
-EXPOSE 80
+WORKDIR /home/ubuntu
+RUN apt-get update && apt-get install -y openjdk-11-jdk 
+COPY --from=stage1 apache-tomcat-9.0.74 .
 EXPOSE 8080
-
-CMD service apache2 start && service jenkins start
+COPY --from=stage1 /etc/apache2 /etc/apache2
+EXPOSE 80
+CMD ["/bin/catalina.sh", "run"]
