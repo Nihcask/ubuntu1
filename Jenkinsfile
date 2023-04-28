@@ -1,6 +1,6 @@
 pipeline{
     agent {
-  label 'docker'
+  label 'docker123'
 } 
 environment {
 		DOCKER_LOGIN_CREDENTIALS=credentials('docker')
