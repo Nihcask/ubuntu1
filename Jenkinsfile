@@ -8,7 +8,7 @@ environment {
     stages {
   stage('checkout') {
     steps {
-      git 'https://github.com/shruthi117/ubuntu.git'
+      echo "checkout stage"
     }
   }
 
