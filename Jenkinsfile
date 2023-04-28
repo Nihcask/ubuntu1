@@ -3,7 +3,7 @@ pipeline{
   label 'docker'
 } 
 environment {
-		DOCKER_LOGIN_CREDENTIALS=credentials('shruthi117-docker')
+		DOCKER_LOGIN_CREDENTIALS=credentials('docker')
 	}
     stages {
   stage('checkout') {
@@ -15,7 +15,7 @@ environment {
   stage('build') {
     steps {
       
-      sh 'docker build -t shruthi117/ubuntu:$BUILD_NUMBER .' 
+      sh 'docker build -t sachink0912/ubuntu:$BUILD_NUMBER .' 
 
     }
   }
@@ -23,13 +23,13 @@ environment {
   stage('push') {
     steps {
       sh 'echo $DOCKER_LOGIN_CREDENTIALS_PSW | docker login -u $DOCKER_LOGIN_CREDENTIALS_USR --password-stdin'
-      sh 'docker push shruthi117/ubuntu:$BUILD_NUMBER'
+      sh 'docker push sachink0912/ubuntu:$BUILD_NUMBER'
     }
   }
 
   stage('deploy') {
     steps {
-      sh "docker run -itd -p 80:8080 shruthi117/ubuntu:$BUILD_NUMBER"
+      sh "docker run -itd -p 80:8080 sachink0912/ubuntu:$BUILD_NUMBER"
     }
   }
 
