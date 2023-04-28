@@ -14,4 +14,4 @@ COPY --from=stage1 apache-tomcat-9.0.74 .
 EXPOSE 8080
 COPY --from=stage1 /etc/apache2 /etc/apache2
 EXPOSE 80
-CMD ["/bin/catalina.sh", "run"]
+CMD ["bin/catalina.sh", "run"]
