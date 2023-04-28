@@ -14,7 +14,7 @@ environment {
 
   stage('build') {
     steps {
-      
+      sh 'mvn clean install'
       sh 'docker build -t sachink0912/ubuntu:$BUILD_NUMBER .' 
 
     }
