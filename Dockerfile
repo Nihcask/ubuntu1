@@ -1,5 +1,4 @@
 FROM ubuntu:latest
-
 RUN apt-get update && apt-get install -y apache2
 RUN apt-get update && apt-get install -y wget gnupg2
 RUN wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | apt-key add -
